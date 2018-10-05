@@ -9,68 +9,93 @@ router.get('/login', function(req, res) {
   res.render('login.html');
 });
 
-router.post('/login', function (req, res) {
-  console.log(req.body);
+router.post('/login', async function (req, res) {
+  let body = req.body;
+  body.password = md5(md5(body.password));
+  console.log(body);
+
+  try {
+    if (await User.findOne({ email: body.email, password: body.password })) {
+      req.session.user = await User.findOne({ email: body.email, password: body.password });
+
+      return res.status(200).json({
+        code: 200,
+        err_code: 0,
+        message: 'Ok',
+      })
+    }
+
+    if (await User.findOne({ email: body.email })) {
+      return res.status(200).json({
+        code: 200,
+        err_code: 2,
+        message: 'Password is incorrect.',
+      })
+    }
+
+    return res.status(200).json({
+      code: 200,
+      err_code: 1,
+      message: 'Email is not registered.',
+    })
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({
+      code: 500,
+      err_code: 500,
+      message: 'Server Error.',
+    })
+  }
 });
 
 router.get('/register', function(req, res) {
   res.render('register.html');
 });
 
-router.post('/register', function(req, res) {
-  var body = req.body;
+router.post('/register', async function (req, res) {
+  let body = req.body;
   body.password = md5(md5(body.password));
   console.log(body);
-  User.findOne({
-    $or: [
-      {
-        email: body.email,
-      }, {
-        nickname: body.nickname,
-      }
-    ]
-  }, function (err, data) {
-    if (err) {
-      return res.status(500).json({
-        code: 500,
-        err_code: 500,
-        message: 'Server Error.',
-      })
-    }
-    if (data) {
+
+  try {
+    if (await User.findOne({ email: body.email })) {
       return res.status(200).json({
         code: 200,
         err_code: 1,
-        message: 'Email or Nickname already exists.',
+        message: 'Email already exists.',
       })
     }
 
-    new User({
-      ...body
-    }).save(function (err, user) {
-      if (err) {
-        return res.status(500).json({
-          code: 500,
-          err_code: 500,
-          message: 'Server Error.',
-        })
-      } else {
-        // res.status(200).send(JSON.stringify({
-        //   code: 200,
-        //   status: 'ok',
-        // }));
-        // Express 提供一个响应方法：json
-        // 自动把对象转成 JSON 格式发送
-        res.status(200).json({
-          code: 200,
-          err_code: 0,
-          message: 'Ok',
-        });
-      }
-    });
+    if (await User.findOne({ nickname: body.nickname })) {
+      return res.status(200).json({
+        code: 200,
+        err_code: 2,
+        message: 'Nickname already exists.',
+      })
+    }
 
-  })
-  // res.redirect('/login');
+    await new User(body).save();
+
+    res.status(200).json({
+      code: 200,
+      err_code: 0,
+      message: 'Ok',
+    })
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({
+      code: 500,
+      err_code: 500,
+      message: 'Server Error.',
+    })
+  }
 });
+
+router.get('/logout', async function (req, res) {
+  // 清除登录状态
+  req.session.user = null;
+  // 重定向到登陆页
+  res.redirect('/login');
+})
 
 module.exports = router;

@@ -4,7 +4,10 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', function(req, res) {
-  res.render('index.html');
+  console.log(req.session.user);
+  res.render('index.html', {
+    user: req.session.user
+  });
 });
 
 module.exports = router;
