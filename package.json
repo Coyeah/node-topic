@@ -1,0 +1,28 @@
+{
+  "name": "node-topic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Coyeah/node-topic.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Coyeah/node-topic/issues"
+  },
+  "homepage": "https://github.com/Coyeah/node-topic#readme",
+  "dependencies": {
+    "art-template": "^4.13.1",
+    "blueimp-md5": "^2.10.0",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "express-art-template": "^1.0.1",
+    "mongoose": "^5.3.1"
+  }
+}
