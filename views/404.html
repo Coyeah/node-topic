@@ -1,14 +1,15 @@
-<!DOCTYPE html>
+{{extend './_layouts/home.html'}}
 
-<html lang="en">
+{{block 'title'}}
+Topic - 404
+{{/block}}
 
-<head>
-  <meta charset="UTF-8">
-  <title>index.test.html</title>
-</head>
-
-<body>
-  <h1>404</h1>
-</body>
-
-</html>
+{{block 'body'}}
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <p>404</p>
+    </div>
+  </div>
+</div>
+{{/block}}

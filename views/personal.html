@@ -1,0 +1,37 @@
+{{extend './_layouts/home.html'}}
+
+{{block 'title'}}
+Topic - 个人中心
+{{/block}}
+
+{{if user}}
+  {{block 'body'}}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <h2>个人中心</h2>
+        <p><b>Email:</b> {{user.email}}</p>
+        <p><b>Nickname:</b> {{user.nickname}}</p>
+        <p><b>Gender:</b> {{user.gender}}</p>
+        <p><b>Bio:</b> {{user.bio}}</p>
+        <p><b>Topic:</b> <a href="/topic/add">添加话题</a></p>
+        <ul>
+          {{each topic}}
+          <li>{{$value.title}} | <a href="/topic/del?id={{$value.id}}">删除</a></li>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+  </div>
+  {{/block}}
+{{else}}
+  {{block 'body'}}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <p>尚未登录。<a href="/">返回主页</a></p>
+      </div>
+    </div>
+  </div>
+  {{/block}}
+{{/if}}

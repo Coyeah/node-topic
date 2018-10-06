@@ -1,15 +1,17 @@
 {{extend './_layouts/home.html'}}
 
 {{block 'title'}}
-论坛网站 - 首页
-{{/block}}
-
-{{block 'head'}}
-<link rel="stylesheet" href="/public/css/layout.css" />
+Topic - 首页
 {{/block}}
 
 {{block 'body'}}
 <div class="container">
-  <p>Hello World!</p>
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      {{each topic}}
+      <p>{{$value.title}} | {{$value.created_time}}</p>
+      {{/each}}
+    </div>
+  </div>
 </div>
 {{/block}}

@@ -12,7 +12,6 @@ router.get('/login', function(req, res) {
 router.post('/login', async function (req, res) {
   let body = req.body;
   body.password = md5(md5(body.password));
-  console.log(body);
 
   try {
     if (await User.findOne({ email: body.email, password: body.password })) {
@@ -55,7 +54,6 @@ router.get('/register', function(req, res) {
 router.post('/register', async function (req, res) {
   let body = req.body;
   body.password = md5(md5(body.password));
-  console.log(body);
 
   try {
     if (await User.findOne({ email: body.email })) {
@@ -93,7 +91,8 @@ router.post('/register', async function (req, res) {
 
 router.get('/logout', async function (req, res) {
   // 清除登录状态
-  req.session.user = null;
+  // req.session.user = null;
+  delete req.session.user;
   // 重定向到登陆页
   res.redirect('/login');
 })

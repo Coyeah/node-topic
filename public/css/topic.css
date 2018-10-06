@@ -1,0 +1,36 @@
+.errorText {
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.formGroup {
+  box-sizing: border-box;
+  padding: 10px 5%;
+  width: 100%;
+}
+
+form .title::before {
+  content: '# ';
+  color: #888;
+}
+
+form .title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+form .input {
+  box-sizing: border-box;
+  padding: 3px;
+  width: 100%;
+}
+
+form .btn {
+  width: 100%;
+}
+
+form .warning {
+  color: red;
+}

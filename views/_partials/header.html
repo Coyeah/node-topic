@@ -1,10 +1,17 @@
 <header class="container">
-  <div class="row">
+  <div class="row header">
     <div class="col-md-8">
-      Forum Website
+      <a href="/">Topic Website</a>
     </div>
     <div class="col-md-4">
-      {{if user}} {{ user.nickname }} | <a href="logout">退出</a> {{else}} <a href="/login">登录</a> | <a href="/register">注册</a> {{/if}}
+      {{if user}}
+      <a href="/personal"><img class="avatar" src="{{user.avatar}}" /> {{ user.nickname }}</a> | <a href="logout">退出</a>
+      {{else}}
+      <a href="/login">登录</a> | <a href="/register">注册</a>
+      {{/if}}
+    </div>
+    <div class="col-md-12">
+      <hr />
     </div>
   </div>
 </header>
