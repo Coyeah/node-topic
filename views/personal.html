@@ -17,12 +17,34 @@ Topic - 个人中心
         <p><b>Topic:</b> <a href="/topic/add">添加话题</a></p>
         <ul>
           {{each topic}}
-          <li>{{$value.title}} | <a href="/topic/del?id={{$value.id}}">删除</a></li>
+          <li><a href="/topic/detil?id={{$value.id}}">{{$value.title}}</a> | <a href="/topic/del?id={{$value.id}}">删除</a></li>
           {{/each}}
+        </ul>
+        <p><b>Review:</b></p>
+        <ul id="review">
         </ul>
       </div>
     </div>
   </div>
+  {{/block}}
+
+  {{block 'script'}}
+  <script>
+    $.ajax({
+      url: '/comment/user',
+      type: 'get',
+      success: function (data) {
+        console.log(data);
+        if (data.code === 200 && data.err_code === 0) {
+          let str = '';
+          data.data.forEach(function (value) {
+            str = str + '<li>' + value.content + ' | <a href="topic/detail?id=' + value.topic_id + '">&#60;' + value.topic_title + '&#62; | <a href="/comment/del?id=' + value.id + '">删除</a></li>';
+          })
+          $('#review').html(str);
+        }
+      }
+    })
+  </script>
   {{/block}}
 {{else}}
   {{block 'body'}}

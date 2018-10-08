@@ -47,6 +47,7 @@ const userSchema = new Schema({
     // 1 不可以评论
     // 2 不可以登录
     enum: [0, 1, 2],
+    default: 0,
   }
 })
 

@@ -15,12 +15,11 @@ router.get('/', async function(req, res) {
   let target = topic.map(value => {
     value.created_time = new Date(value.created_time).toLocaleString();
     return {
+      id: value.id,
       title: value.title,
       created_time: new Date(value.created_time).toLocaleString(),
     };
   })
-
-  console.log(target);
 
   res.render('index.html', {
     user: req.session.user,
@@ -37,9 +36,18 @@ router.get('/personal', async function (req, res) {
       console.log(e);
     }
   }
+
+  let target = topic.map(value => {
+    value.created_time = new Date(value.created_time).toLocaleString();
+    return {
+      id: value.id,
+      title: value.title,
+    };
+  })
+
   res.render('personal.html', {
     user: req.session.user,
-    topic,
+    topic: target,
   });
 });
 

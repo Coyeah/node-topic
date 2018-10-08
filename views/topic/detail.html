@@ -1,0 +1,107 @@
+{{extend '../_layouts/home.html'}}
+
+{{if detail}}
+  {{block 'title'}}
+  Topic - {{detail.title}}
+  {{/block}}
+
+  {{block 'head'}}
+  <script src="https://unpkg.com/wangeditor/release/wangEditor.min.js"></script>
+  {{/block}}
+
+  {{block 'body'}}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <h2>{{detail.title}}</h2>
+        <p>创建日期：{{detail.created_time}} | 最新日期： {{detail.last_modified_time}}</p>
+        <p>发起人： {{detail.sponsor}} | 浏览数： {{detail.views}}</p>
+        <hr />
+        <div id="content"></div>
+        <hr />
+        <h4>评论：</h4>
+        <div id="comment"></div>
+
+        {{if user}}
+        <div id="editor" style="height: 100px; border: 1px solid #eee;"></div>
+        <button id="post_btn" type="button" class="btn btn-default" style="width: 100%; margin-top: 5px;">评论</button>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+  {{/block}}
+
+  {{block 'script'}}
+
+  <script>
+    var temp = '{{detail.content}}';
+    var target = temp.replace(/&#60;/g, '<').replace(/&#62;/g, '>');
+    $('#content').html(target);
+  </script>
+
+  {{if user}}
+  <script type="text/javascript">
+    var E = window.wangEditor
+    var editor = new E('', '#editor')  // 两个参数也可以传入 elem 对象，class 选择器
+    editor.create()
+  </script>
+
+  <script>
+    $('#post_btn').on('click', function () {
+      console.log('click');
+      $.ajax({
+        url: '/comment/add',
+        type: 'post',
+        data: {
+          tid: '{{detail.id}}',
+          content: editor.txt.text(),
+        },
+        dataType: 'json',
+        success: function (data) {
+          console.log(data);
+          if (data.code === 200 && data.err_code === 0) {
+            location.reload(true);
+          }
+        }
+      })
+    })
+  </script>
+  {{/if}}
+
+  <script>
+    $.ajax({
+      url: '/comment/topic?tid={{detail.id}}',
+      type: 'get',
+      success: function (data) {
+        console.log(data);
+        if (data.code === 200 && data.err_code === 0) {
+          let str = '';
+          data.data.forEach(function (value) {
+            // if (value.reviewer === '{{user && user.email}}') {
+            //   str = str + '<p>' + value.content + '<a href="/comment/del?id=' + value.id + '">X</a></p>';
+            // } else {
+            //   str = str + '<p>' + value.content + '</p>';
+            // }
+            str = str + '<p>' + value.content + '</p>';
+          })
+          $('#comment').html(str);
+        }
+      }
+    })
+  </script>
+  {{/block}}
+{{else}}
+  {{block 'title'}}
+  Topic - 话题不存在
+  {{/block}}
+
+  {{block 'body'}}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <p>话题不存在。 <a href="/">返回主页</a></p>
+      </div>
+    </div>
+  </div>
+  {{/block}}
+{{/if}}

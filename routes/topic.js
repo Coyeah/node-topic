@@ -5,9 +5,9 @@ const router = express.Router();
 const Topic = require('../models/topic.js');
 
 router.get('/topic/add', function (req, res) {
-    res.render('topic/topicAdd.html',{
-      user: req.session.user
-    });
+  res.render('topic/topicAdd.html',{
+    user: req.session.user
+  });
 });
 
 router.post('/topic/add', async function (req, res) {
@@ -64,5 +64,32 @@ router.get('/topic/del', async function (req, res) {
   res.redirect('/personal');
 });
 
+router.get('/topic/detail', async function (req, res) {
+  let detail = null, target = {};
+  try {
+    detail = await Topic.findOne({ id: req.query.id });
+
+    if (detail) {
+      target.id = detail.id;
+      target.title = detail.title;
+      target.content = detail.content;
+      target.sponsor = detail.sponsor;
+      target.views = detail.views + 1;
+      target.created_time = new Date(detail.created_time).toLocaleString();
+      target.last_modified_time = new Date(detail.last_modified_time).toLocaleString();
+
+      await Topic.findOneAndUpdate({ id: req.query.id }, {
+        views: target.views,
+      });
+    }
+  } catch (e) {
+    console(e);
+  }
+
+  res.render('topic/detail.html',{
+    user: req.session.user,
+    detail: target,
+  });
+})
 
 module.exports = router;

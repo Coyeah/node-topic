@@ -7,6 +7,7 @@ const session = require('express-session')
 const commonRoute = require('./routes/common');
 const sessionRoute = require('./routes/session');
 const topicRoute = require('./routes/topic');
+const commentRoute = require('./routes/comment');
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use(session({
 app.use(commonRoute);
 app.use(sessionRoute);
 app.use(topicRoute);
+app.use(commentRoute);
 
 app.use(function (req, res) {
   res.type('text/html');
