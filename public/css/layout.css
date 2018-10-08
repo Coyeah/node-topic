@@ -1,12 +1,94 @@
 .header {
+  box-sizing: border-box;
+  padding: 5px;
+  background-color: #fff;
+  height: 50px;
+}
+
+.header-logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.header-operation {
+  line-height: 25px;
+}
+
+.header-avatar {
+  box-sizing: border-box;
+  padding: 3px;
+  width: 22px;
+  height: 22px;
+}
+
+.content {
+  margin-top: 50px;
+  min-height: 300px;
 }
 
 .footer {
+  box-sizing: border-box;
+  padding: 5px 0;
+  text-align: center;
 }
 
-.avatar {
+.footer-icon {
+  font-size: 24px;
+}
+
+.footer-icon > i {
+  margin: 0 5px;
+}
+
+a {
+  padding: 5px 15px;
+  transition: all 0.8s;
+}
+
+a:link {
+  color: #000;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+a:visited {
+  color: #000;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #5B7778;
+  font-weight: bold;
+  text-decoration: none;
+  background-color: rgba(0,0,0,0.05);
+}
+
+a:active {
+  color: #000;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.list-default {
+
+}
+
+.list-default > .item {
   box-sizing: border-box;
-  padding: 3px;
-  width: 30px;
-  height: 30px;
+  margin: 5px;
+  padding: 5px;
+}
+
+.list-default > .item::before {
+  content: '# ';
+  color: #5B7778;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.exception {
+  margin: 100px 0;
+  font-size: 16px;
+  text-align: center;
 }

@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 
+const User = require('../models/user.js');
 const Topic = require('../models/topic.js');
 const Comment = require('../models/comment.js');
 
@@ -9,6 +10,20 @@ router.get('/comment/topic', async function (req, res) {
   let list = [];
   try {
     list = await Comment.find({ tid: req.query.tid});
+
+    {
+      let temp = [];
+      for (let i = 0; i < list.length; i++) {
+        user = await User.findOne({ email: list[i].reviewer });
+        temp.push({
+          id: list[i].id,
+          content: list[i].content,
+          reviewer: user ? user.nickname : null,
+          created_time: new Date(list[i].created_time).toLocaleString(),
+        })
+      }
+      list = temp;
+    }
 
     return res.status(200).json({
       code: 200,

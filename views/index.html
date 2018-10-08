@@ -8,9 +8,11 @@ Topic - 首页
 <div class="container">
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
-      {{each topic}}
-      <p><a href="/topic/detail?id={{$value.id}}">{{$value.title}} | {{$value.created_time}}</a></p>
-      {{/each}}
+      <div class="list-default">
+        {{each topic}}
+        <div class="item"><a href="/topic/detail?id={{$value.id}}">{{$value.title}} | {{$value.created_time}}</a></div>
+        {{/each}}
+      </div>
     </div>
   </div>
 </div>

@@ -1,0 +1,24 @@
+.personal {
+
+}
+
+.personal-title {
+  font-size: 24px;
+}
+
+.personal-title::before {
+  content: '# ';
+  color: #5B7778;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.personal-item {
+  font-size: 14px;
+}
+
+.personal-item > b{
+  box-sizing: border-box;
+  padding-right: 3%;
+  font-size: 16px;
+}

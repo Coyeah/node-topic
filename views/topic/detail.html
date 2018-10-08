@@ -6,6 +6,8 @@
   {{/block}}
 
   {{block 'head'}}
+  <link rel="stylesheet" href="/public/css/topic.css" />
+  <link rel="stylesheet" href="/public/css/comment.css" />
   <script src="https://unpkg.com/wangeditor/release/wangEditor.min.js"></script>
   {{/block}}
 
@@ -13,19 +15,25 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
-        <h2>{{detail.title}}</h2>
-        <p>创建日期：{{detail.created_time}} | 最新日期： {{detail.last_modified_time}}</p>
-        <p>发起人： {{detail.sponsor}} | 浏览数： {{detail.views}}</p>
-        <hr />
-        <div id="content"></div>
-        <hr />
-        <h4>评论：</h4>
-        <div id="comment"></div>
+        <div class="topic">
+          <p class="topic-title">{{detail.title}}</p>
+          <p class="topic-info">发布者：{{detail.sponsor}}</p>
+          <p class="topic-info">浏览数：{{detail.views}}</p>
+          <hr />
+          <div id="content"></div>
+          <hr />
+          <p class="topic-info">创建日期：{{detail.created_time}}</p>
+          <p class="topic-info">最新日期：{{detail.last_modified_time}}</p>
+        </div>
+        <div class="comment">
+          <p class="comment-title">评论：</p>
+          <ul id="comment"></ul>
 
-        {{if user}}
-        <div id="editor" style="height: 100px; border: 1px solid #eee;"></div>
-        <button id="post_btn" type="button" class="btn btn-default" style="width: 100%; margin-top: 5px;">评论</button>
-        {{/if}}
+          {{if user}}
+          <div id="editor" class="comment-editor"></div>
+          <button id="post_btn" type="button" class="btn btn-default" style="width: 100%; margin-top: 5px;">评论</button>
+          {{/if}}
+        </div>
       </div>
     </div>
   </div>
@@ -82,7 +90,7 @@
             // } else {
             //   str = str + '<p>' + value.content + '</p>';
             // }
-            str = str + '<p>' + value.content + '</p>';
+            str = str + '<li class="comment-item"><p>' + value.content + '</p><p class="comment-suffix">' + value.reviewer + '</p><p class="comment-suffix">' + value.created_time + '</p></li>';
           })
           $('#comment').html(str);
         }
@@ -99,7 +107,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
-        <p>话题不存在。 <a href="/">返回主页</a></p>
+        <div class='exception'>尚未登录。<a href="/">返回主页</a></div>
       </div>
     </div>
   </div>
